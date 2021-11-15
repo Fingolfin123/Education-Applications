@@ -25,20 +25,19 @@ def dbRead(dbConn, dbTable):
 
     '''
 
+    #Get all table names from db connection
     tableNames = pd.read_sql_query('SELECT name from sqlite_master where type= "table";', dbConn)
-       
+    
+    #Select from available tables
     print("\nAvailable tables:")
     print(tableNames["name"])
-
     dbTable = int(input("\nSelect the index of table you would like to load: "))
 
     if not dbTable:
         if tableNames["name"].count() == 0:
-            print("Not tables found in data file.")
-        else:
-            #set default table to read from if none selected
-            dbTable = tableNames["name"][0]
+            print("No tables found in data file.")
     
+    dbTable = tableNames["name"][dbTable]
     print("Selected Table: " + dbTable)
     df = pd.read_sql_query('SELECT * FROM ' + dbTable, dbConn)
     

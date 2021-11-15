@@ -14,20 +14,30 @@ file = input("Enter full file path for data file: ")
 myData = DataProcessor(file)
 
 #Show preview of dataframe
-print("Show orginal data frame")
-myData.get_col_stats(myData.df)
+def ui_getStats():
+	print("\nShow original data frame")
+	myData.get_col_stats(myData.df)
 
 #filter data
-#datetime(2020,7,1,tzinfo=utc)
+def ui_filter():
+	filters = {">":datetime(2020,7,15,tzinfo=utc),"<":datetime(2020,8,1,tzinfo=utc)}
+	myData.filter_data(myData.df,filters,"Timestamp",["Course Name","Timestamp","Rating"])
+	dataOut = myData.filt
+	filters = {">":2.5,"<":4}
+	myData.filter_data(dataOut,filters,"Rating",["Course Name","Timestamp","Rating"])
+	dataOut = myData.filt
 
-#filters = {">":datetime(2020,7,15,tzinfo=utc),"<":datetime(2020,8,1,tzinfo=utc)}
-#myData.filter_data(myData.df,filters,"Timestamp",["Course Name","Timestamp","Rating"])
-#dataOut = myData.filt
-filters = {">":2.5,"<":4}
-myData.filter_data(myData.df,filters,"Rating",["Course Name","Timestamp","Rating"])
-dataOut = myData.filt
+	#Show results of filtered sections
+	print("\nShow filter results: \n")
+	myData.get_col_stats(dataOut)
 
-#Show results of filtered sections
-print("\nShow results: \n")
-myData.get_col_stats(dataOut)
+#plot data
+def ui_plot():
+	print("\nPlotting Options: \n")
+	myData.plot_data(myData.df)
 
+
+#Choose which modules to interact with
+ui_getStats()
+#ui_filter()
+#ui_plot()
